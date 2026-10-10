@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b2b5c">
+  <meta name="description" content="Pauta & Números: contabilidade, economia e negócios explicados com clareza para o Brasil.">
+  <title>Pauta & Números — Contabilidade e Economia</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #0b2b5c;
+      --navy-deep: #071e42;
+      --blue: #2463df;
+      --blue-dark: #174dbb;
+      --sky: #dceaff;
+      --ink: #152744;
+      --muted: #687891;
+      --line: #e6edf6;
+      --paper: #ffffff;
+      --wash: #f4f7fc;
+      --mint: #b9f0dd;
+      --radius: 18px;
+      --shadow: 0 18px 48px rgba(13, 42, 87, .12);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); line-height: 1.55; }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; }
+    :focus-visible { outline: 3px solid #83b6ff; outline-offset: 3px; }
+    .container { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .utility-bar { background: var(--navy-deep); color: #d6e4ff; font-size: 12px; letter-spacing: .025em; }
+    .utility-inner { min-height: 36px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .utility-label { display: inline-flex; align-items: center; gap: 8px; }
+    .utility-dot { width: 7px; height: 7px; display: inline-block; border-radius: 50%; background: #62d9ad; box-shadow: 0 0 0 4px rgba(98,217,173,.12); }
+    .utility-note { opacity: .8; }
+
+    .site-header { position: sticky; z-index: 20; top: 0; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
+    .header-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .brand { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 11px; }
+    .brand-mark { display: grid; width: 39px; height: 39px; place-items: center; color: white; background: var(--blue); border-radius: 12px; box-shadow: 0 8px 16px rgba(36,99,223,.2); }
+    .brand-mark svg { width: 23px; height: 23px; }
+    .brand-name { display: block; color: var(--navy); font-size: 18px; font-weight: 850; letter-spacing: -.055em; line-height: 1.05; }
+    .brand-tagline { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+    .primary-nav { display: flex; align-items: center; justify-content: center; gap: clamp(16px, 2.4vw, 32px); margin-left: auto; }
+    .primary-nav a { color: #42536d; font-size: 13px; font-weight: 680; transition: color .18s ease; }
+    .primary-nav a:hover { color: var(--blue); }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .icon-button, .menu-button { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: white; cursor: pointer; }
+    .icon-button svg, .menu-button svg { width: 18px; height: 18px; }
+    .button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 9px; padding: 0 17px; border: 0; border-radius: 11px; background: var(--blue); color: white; font-size: 13px; font-weight: 760; cursor: pointer; transition: transform .18s ease, background .18s ease, box-shadow .18s ease; }
+    .button:hover { transform: translateY(-1px); background: var(--blue-dark); box-shadow: 0 8px 20px rgba(36,99,223,.2); }
+    .button svg { width: 16px; height: 16px; }
+    .button-light { color: var(--navy); background: white; }
+    .button-light:hover { color: var(--navy); background: #eaf2ff; }
+    .menu-button { display: none; }
+
+    .hero { position: relative; overflow: hidden; color: white; background: linear-gradient(116deg, #08234d 0%, #0e3775 55%, #1d56b3 100%); }
+    .hero::before, .hero::after { position: absolute; content: ""; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; pointer-events: none; }
+    .hero::before { width: 580px; height: 580px; top: -360px; right: 12%; }
+    .hero::after { width: 720px; height: 720px; right: -400px; bottom: -510px; }
+    .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(380px, .98fr); align-items: center; gap: clamp(36px, 6vw, 82px); padding-block: 72px 76px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: #b8d3ff; font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow-line { display: inline-block; width: 26px; height: 2px; border-radius: 2px; background: #5fe0b3; }
+    .hero h1 { max-width: 600px; margin: 20px 0 17px; font-size: clamp(40px, 5vw, 62px); line-height: 1.04; letter-spacing: -.065em; }
+    .hero h1 span { color: #9fc5ff; }
+    .hero-copy { max-width: 480px; margin: 0; color: #d5e3f8; font-size: 16px; line-height: 1.7; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 27px; }
+    .hero-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 2px; color: #e6efff; font-size: 13px; font-weight: 700; }
+    .hero-link svg { width: 16px; height: 16px; }
+    .hero-proof { display: flex; align-items: center; gap: 11px; margin-top: 34px; color: #c5d5ef; font-size: 12px; }
+    .proof-mark { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; color: #b9f0dd; }
+    .proof-mark svg { width: 15px; height: 15px; }
+
+    .feature-card { overflow: hidden; border: 1px solid rgba(255,255,255,.4); border-radius: 20px; background: white; color: var(--ink); box-shadow: 0 26px 60px rgba(0,12,39,.27); transform: rotate(.5deg); transition: transform .25s ease; }
+    .feature-card:hover { transform: rotate(0) translateY(-3px); }
+    .feature-art { position: relative; overflow: hidden; height: 210px; background: #deebff; }
+    .feature-art svg { display: block; width: 100%; height: 100%; }
+    .feature-badge { position: absolute; top: 16px; left: 16px; display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid rgba(255,255,255,.55); border-radius: 999px; color: var(--navy); background: rgba(255,255,255,.9); font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    .feature-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+    .feature-body { padding: 22px 24px 24px; }
+    .feature-category { color: var(--blue); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+    .feature-body h2 { margin: 9px 0 9px; color: var(--navy); font-size: clamp(19px, 2.2vw, 24px); line-height: 1.22; letter-spacing: -.045em; }
+    .feature-body p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .feature-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 19px; padding-top: 17px; border-top: 1px solid var(--line); }
+    .read-time { display: inline-flex; align-items: center; gap: 7px; color: #75839a; font-size: 11px; }
+    .read-time svg { width: 14px; height: 14px; }
+    .text-link { display: inline-flex; align-items: center; gap: 6px; padding: 5px 0; border: 0; color: var(--blue); background: transparent; font-size: 12px; font-weight: 800; cursor: pointer; }
+    .text-link svg { width: 15px; height: 15px; transition: transform .18s ease; }
+    .text-link:hover svg { transform: translateX(3px); }
+
+    .topic-strip { border-bottom: 1px solid var(--line); background: #f8faff; }
+    .topic-inner { display: flex; min-height: 67px; align-items: center; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+    .topic-inner::-webkit-scrollbar { display: none; }
+    .topic-title { flex: 0 0 auto; color: var(--navy); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+    .topic-link { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 7px; padding: 7px 11px; border: 1px solid #e6edf8; border-radius: 999px; color: #4b5e79; background: white; font-size: 11px; font-weight: 680; transition: border-color .18s ease, color .18s ease; }
+    .topic-link:hover { border-color: #a9c6fa; color: var(--blue); }
+    .topic-link svg { width: 13px; height: 13px; color: var(--blue); }
+
+    .news-section { padding: 67px 0 78px; }
+    .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 27px; }
+    .section-kicker { margin: 0 0 8px; color: var(--blue); font-size: 10px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+    .section-heading h2 { margin: 0; color: var(--navy); font-size: clamp(28px, 4vw, 38px); line-height: 1.12; letter-spacing: -.055em; }
+    .section-description { max-width: 360px; margin: 7px 0 0; color: var(--muted); font-size: 13px; }
+    .search-wrap { position: relative; display: flex; width: min(260px, 100%); flex: 0 0 auto; align-items: center; }
+    .search-wrap svg { position: absolute; left: 13px; width: 16px; height: 16px; color: #8290a6; pointer-events: none; }
+    .search-input { width: 100%; min-height: 43px; padding: 0 13px 0 39px; border: 1px solid var(--line); border-radius: 11px; outline: none; color: var(--ink); background: white; font-size: 12px; transition: border .18s ease, box-shadow .18s ease; }
+    .search-input::placeholder { color: #9aa6b8; }
+    .search-input:focus { border-color: #8cb3f5; box-shadow: 0 0 0 3px rgba(36,99,223,.1); }
+    .filter-row { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; overflow-x: auto; scrollbar-width: none; }
+    .filter-row::-webkit-scrollbar { display: none; }
+    .filter-button { flex: 0 0 auto; padding: 8px 13px; border: 1px solid var(--line); border-radius: 999px; color: #61718a; background: white; font-size: 11px; font-weight: 750; cursor: pointer; transition: background .18s ease, color .18s ease, border-color .18s ease; }
+    .filter-button:hover, .filter-button[aria-pressed="true"] { border-color: var(--navy); color: white; background: var(--navy); }
+    .news-layout { display: grid; grid-template-columns: minmax(0, 1fr) 295px; align-items: start; gap: 30px; }
+    .story-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
+    .story-card { display: flex; min-height: 248px; flex-direction: column; padding: 19px; border: 1px solid var(--line); border-radius: 15px; background: white; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .story-card:hover { transform: translateY(-3px); border-color: #d3e1f6; box-shadow: 0 14px 30px rgba(13,42,87,.08); }
+    .story-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .category-label { display: inline-flex; align-items: center; gap: 7px; color: var(--blue); font-size: 9px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+    .category-label::before { width: 6px; height: 6px; border-radius: 50%; background: currentColor; content: ""; }
+    .category-economia { color: #11805e; }
+    .category-negocios { color: #965cb9; }
+    .story-visual { display: grid; width: 43px; height: 43px; flex: 0 0 auto; place-items: center; border-radius: 13px; color: var(--blue); background: #edf4ff; }
+    .story-visual svg { width: 21px; height: 21px; }
+    .story-card h3 { margin: 15px 0 9px; color: var(--navy); font-size: 18px; line-height: 1.3; letter-spacing: -.035em; }
+    .story-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+    .story-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 18px; color: #8a97a9; font-size: 10px; }
+    .story-meta span:first-child { display: inline-flex; align-items: center; gap: 6px; }
+    .story-meta svg { width: 13px; height: 13px; }
+    .story-meta button { display: inline-flex; align-items: center; gap: 5px; padding: 2px 0; border: 0; color: var(--blue); background: transparent; font-size: 10px; font-weight: 800; cursor: pointer; }
+    .story-meta button svg { width: 13px; height: 13px; }
+    .empty-state { display: none; grid-column: 1 / -1; padding: 30px 18px; border: 1px dashed #cbd8ea; border-radius: 15px; color: var(--muted); text-align: center; font-size: 13px; }
+
+    .sidebar { display: grid; gap: 17px; }
+    .newsletter-card { position: relative; overflow: hidden; padding: 23px; border-radius: 16px; color: white; background: linear-gradient(150deg, #0d3472, #1e61c9); }
+    .newsletter-card::after { position: absolute; right: -32px; bottom: -68px; width: 170px; height: 170px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; box-shadow: 0 0 0 18px rgba(255,255,255,.035), 0 0 0 38px rgba(255,255,255,.025); content: ""; }
+    .newsletter-icon { display: grid; width: 37px; height: 37px; place-items: center; border: 1px solid rgba(255,255,255,.25); border-radius: 11px; background: rgba(255,255,255,.12); }
+    .newsletter-icon svg { width: 19px; height: 19px; }
+    .newsletter-card h3 { position: relative; z-index: 1; margin: 17px 0 7px; font-size: 20px; line-height: 1.2; letter-spacing: -.04em; }
+    .newsletter-card p { position: relative; z-index: 1; margin: 0; color: #d7e6ff; font-size: 12px; line-height: 1.6; }
+    .newsletter-form { position: relative; z-index: 1; display: grid; gap: 9px; margin-top: 17px; }
+    .newsletter-form input { width: 100%; min-height: 41px; padding: 0 12px; border: 1px solid rgba(255,255,255,.3); border-radius: 9px; outline: none; color: white; background: rgba(255,255,255,.1); font-size: 12px; }
+    .newsletter-form input::placeholder { color: #ccdcf6; }
+    .newsletter-form input:focus { border-color: white; box-shadow: 0 0 0 3px rgba(255,255,255,.12); }
+    .newsletter-form .button { min-height: 40px; color: var(--navy); background: white; font-size: 12px; }
+    .newsletter-form .button:hover { background: #eaf2ff; }
+    .newsletter-note { position: relative; z-index: 1; display: block; margin-top: 11px; color: #c3d8fb; font-size: 9px; line-height: 1.5; }
+    .popular-card { padding: 21px; border: 1px solid var(--line); border-radius: 15px; background: white; }
+    .popular-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+    .popular-heading h3 { margin: 0; color: var(--navy); font-size: 15px; letter-spacing: -.025em; }
+    .popular-heading svg { width: 17px; height: 17px; color: var(--blue); }
+    .popular-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; counter-reset: popular; }
+    .popular-list li { display: grid; grid-template-columns: 27px 1fr; gap: 10px; padding: 14px 0; border-bottom: 1px solid #edf1f7; counter-increment: popular; }
+    .popular-list li:last-child { padding-bottom: 0; border-bottom: 0; }
+    .popular-list li::before { color: #a9b9d2; content: "0" counter(popular); font-size: 12px; font-weight: 850; }
+    .popular-list button { padding: 0; border: 0; color: #3d4f69; background: transparent; text-align: left; font-size: 11px; font-weight: 730; line-height: 1.5; cursor: pointer; }
+    .popular-list button:hover { color: var(--blue); }
+    .editorial-note { padding: 13px 15px; border-left: 3px solid #82aefa; border-radius: 0 10px 10px 0; color: #63738b; background: #f2f6fd; font-size: 10px; line-height: 1.6; }
+
+    .closing-band { padding: 36px 0; border-top: 1px solid var(--line); background: #f8faff; }
+    .closing-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .closing-inner h2 { margin: 0; color: var(--navy); font-size: 21px; letter-spacing: -.04em; }
+    .closing-inner p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .site-footer { padding: 25px 0; color: #c7d6ec; background: var(--navy-deep); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 9px; color: white; font-size: 13px; font-weight: 800; letter-spacing: -.03em; }
+    .footer-brand .brand-mark { width: 29px; height: 29px; border-radius: 9px; }
+    .footer-brand .brand-mark svg { width: 17px; height: 17px; }
+    .footer-copy { margin: 0; color: #9db2d1; font-size: 10px; text-align: right; }
+
+    dialog { width: min(620px, calc(100% - 28px)); max-height: min(82vh, 760px); padding: 0; border: 1px solid #dce5f1; border-radius: 18px; color: var(--ink); background: white; box-shadow: 0 30px 90px rgba(4,20,49,.35); }
+    dialog::backdrop { background: rgba(5,20,45,.65); backdrop-filter: blur(3px); }
+    .dialog-content { padding: clamp(23px, 5vw, 36px); }
+    .dialog-top { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+    .dialog-category { color: var(--blue); font-size: 10px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
+    .dialog-close { display: grid; width: 35px; height: 35px; flex: 0 0 auto; place-items: center; border: 1px solid var(--line); border-radius: 10px; background: white; cursor: pointer; }
+    .dialog-close svg { width: 16px; height: 16px; }
+    .dialog-content h2 { margin: 21px 0 11px; color: var(--navy); font-size: clamp(25px, 5vw, 35px); line-height: 1.14; letter-spacing: -.05em; }
+    .dialog-summary { margin: 0 0 22px; color: #596a83; font-size: 15px; line-height: 1.65; }
+    .dialog-body { padding-top: 18px; border-top: 1px solid var(--line); color: #52627a; font-size: 14px; line-height: 1.8; }
+    .dialog-body p { margin: 0 0 14px; }
+    .dialog-body p:last-child { margin-bottom: 0; }
+    .toast { position: fixed; z-index: 50; right: 22px; bottom: 22px; max-width: min(380px, calc(100% - 44px)); padding: 13px 17px; border: 1px solid rgba(255,255,255,.15); border-radius: 11px; color: white; background: var(--navy); box-shadow: var(--shadow); font-size: 12px; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+    .toast.is-visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 920px) {
+      .primary-nav { gap: 14px; }
+      .primary-nav a { font-size: 12px; }
+      .hero-inner { grid-template-columns: minmax(0, 1fr) minmax(330px, .92fr); gap: 34px; }
+      .news-layout { grid-template-columns: minmax(0, 1fr) 270px; gap: 20px; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(100% - 36px, 620px); }
+      .utility-note { display: none; }
+      .header-inner { min-height: 69px; }
+      .primary-nav { position: absolute; top: calc(100% + 1px); left: 0; right: 0; display: none; align-items: stretch; gap: 0; padding: 7px 18px 15px; border-bottom: 1px solid var(--line); background: white; box-shadow: 0 16px 22px rgba(15,40,80,.08); }
+      .primary-nav.is-open { display: grid; }
+      .primary-nav a { padding: 12px 8px; border-bottom: 1px solid #f0f3f8; font-size: 13px; }
+      .primary-nav a:last-child { border-bottom: 0; }
+      .menu-button { display: grid; }
+      .header-actions .subscribe-header { display: none; }
+      .hero-inner { grid-template-columns: 1fr; gap: 34px; padding-block: 53px 58px; }
+      .hero h1 { max-width: 590px; font-size: clamp(39px, 9vw, 57px); }
+      .hero-copy { font-size: 15px; }
+      .feature-card { width: min(100%, 510px); justify-self: center; transform: none; }
+      .feature-card:hover { transform: translateY(-2px); }
+      .feature-art { height: 190px; }
+      .news-section { padding: 52px 0 58px; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 18px; }
+      .search-wrap { width: 100%; }
+      .news-layout { grid-template-columns: 1fr; }
+      .story-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .editorial-note { grid-column: 1 / -1; }
+      .closing-inner { align-items: flex-start; flex-direction: column; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+      .footer-copy { text-align: left; }
+    }
+    @media (max-width: 520px) {
+      .container { width: calc(100% - 30px); }
+      .brand-name { font-size: 16px; }
+      .brand-tagline { font-size: 8px; }
+      .header-inner { gap: 10px; }
+      .header-actions { gap: 7px; }
+      .icon-button, .menu-button { width: 37px; height: 37px; }
+      .hero-inner { padding-block: 44px 49px; }
+      .hero h1 { margin-top: 17px; font-size: clamp(36px, 11vw, 48px); }
+      .hero-actions { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .hero-proof { margin-top: 22px; }
+      .feature-art { height: 165px; }
+      .feature-body { padding: 19px; }
+      .feature-body h2 { font-size: 21px; }
+      .topic-inner { min-height: 60px; gap: 10px; }
+      .topic-title { margin-right: 3px; }
+      .story-grid { grid-template-columns: 1fr; }
+      .story-card { min-height: 222px; }
+      .sidebar { grid-template-columns: 1fr; }
+      .newsletter-card { padding: 22px; }
+      .section-heading h2 { font-size: 31px; }
+      .closing-band { padding: 29px 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <span class="utility-label"><span class="utility-dot" aria-hidden="true"></span> Jornalismo claro para decisões melhores</span>
+      <span class="utility-note">Protótipo editorial · manchetes de exemplo</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="Pauta & Números — página inicial">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 3.75h8l4 4v12.5H6V3.75Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.9v4h4M9 12h6M9 15.5h6M9 9h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="m14.5 18 1.4 1.4 2.8-3.1" stroke="#B9F0DD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span><span class="brand-name">Pauta &amp; Números</span><span class="brand-tagline">Contabilidade · Economia</span></span>
+      </a>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="Navegação principal">
+        <a href="#noticias" data-nav-filter="all">Últimas notícias</a>
+        <a href="#noticias" data-nav-filter="contabilidade">Contabilidade</a>
+        <a href="#noticias" data-nav-filter="economia">Economia</a>
+        <a href="#noticias" data-nav-filter="negocios">Negócios</a>
+        <a href="#sobre">Sobre</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" id="focusSearch" type="button" aria-label="Pesquisar matérias" title="Pesquisar matérias">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <a class="button subscribe-header" href="#newsletter">Receba a newsletter <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <button class="menu-button" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="primaryNav">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-inner">
+        <div class="hero-copy-column">
+          <div class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> Informação para quem decide</div>
+          <h1 id="hero-title">Contabilidade sem complicação. <span>Economia sem ruído.</span></h1>
+          <p class="hero-copy">O que movimenta empresas, profissionais contábeis e o bolso dos brasileiros — explicado com contexto e clareza.</p>
+          <div class="hero-actions">
+            <a class="button button-light" href="#noticias">Explorar as pautas <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="hero-link" href="#newsletter">Receber a seleção da semana <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="hero-proof"><span class="proof-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.2L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Conteúdo direto ao ponto, feito para a realidade brasileira.</span></div>
+        </div>
+
+        <article class="feature-card" aria-labelledby="feature-title">
+          <div class="feature-art">
+            <svg viewBox="0 0 640 330" role="img" aria-label="Ilustração abstrata de gráficos econômicos e skyline urbano em tons de azul">
+              <defs>
+                <linearGradient id="artBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#EAF3FF"/><stop offset="1" stop-color="#B9D3FF"/></linearGradient>
+                <linearGradient id="tower" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3974D8"/><stop offset="1" stop-color="#16448F"/></linearGradient>
+                <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#80B1FF"/><stop offset="1" stop-color="#3470D4"/></linearGradient>
+              </defs>
+              <rect width="640" height="330" fill="url(#artBg)"/>
+              <circle cx="520" cy="35" r="105" fill="#fff" opacity=".38"/>
+              <path d="M0 266h640v64H0z" fill="#D1E2FB"/>
+              <path d="M20 231h54v35H20zM80 207h38v59H80zM126 225h68v41h-68zM205 187h57v79h-57zM270 214h42v52h-42z" fill="#88AEE5" opacity=".7"/>
+              <path d="M324 116h77v150h-77z" fill="url(#tower)"/><path d="M340 94h45v22h-45z" fill="#285AA6"/>
+              <path d="M418 165h48v101h-48zM476 137h57v129h-57zM543 185h65v81h-65z" fill="#4F83D0"/>
+              <path d="M333 130h59M333 148h59M333 166h59M333 184h59M333 202h59M333 220h59M333 238h59" stroke="#9DC1FA" stroke-width="3" opacity=".75"/>
+              <path d="M427 179h30M427 194h30M427 209h30M427 224h30M427 239h30M487 151h34M487 168h34M487 185h34M487 202h34M487 219h34M487 236h34M554 199h42M554 216h42M554 233h42" stroke="#B7D1F5" stroke-width="3" opacity=".75"/>
+              <rect x="35" y="35" width="238" height="178" rx="16" fill="#fff" opacity=".95"/>
+              <text x="57" y="67" fill="#71829B" font-size="11" font-family="system-ui, sans-serif" font-weight="700" letter-spacing="1.2">VISÃO DE CENÁRIO</text>
+              <path d="M58 175h189M58 145h189M58 115h189M58 85h189" stroke="#E8EEF7" stroke-width="1"/>
+              <rect x="76" y="145" width="20" height="30" rx="4" fill="#9BBDF0"/><rect x="111" y="127" width="20" height="48" rx="4" fill="#77A3E8"/><rect x="146" y="134" width="20" height="41" rx="4" fill="#5C8DDD"/><rect x="181" y="103" width="20" height="72" rx="4" fill="#3C73D0"/><rect x="216" y="84" width="20" height="91" rx="4" fill="#2463DF"/>
+              <path d="m78 127 40-20 39 8 39-29 39-19" fill="none" stroke="#0C9B70" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="235" cy="67" r="4" fill="#0C9B70"/><circle cx="157" cy="115" r="3.5" fill="#0C9B70"/><circle cx="118" cy="107" r="3.5" fill="#0C9B70"/><circle cx="78" cy="127" r="3.5" fill="#0C9B70"/>
+              <rect x="464" y="38" width="127" height="50" rx="12" fill="#fff" opacity=".94"/><circle cx="485" cy="63" r="10" fill="#DBF6EC"/><path d="m480 63 3 3 7-7" fill="none" stroke="#10835F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="503" y="56" width="65" height="5" rx="2.5" fill="#9DB2D0"/><rect x="503" y="66" width="47" height="4" rx="2" fill="#D6DFEB"/>
+              <path d="M26 291h588" stroke="#AEC8EB" stroke-width="2"/>
+            </svg>
+            <span class="feature-badge"><span aria-hidden="true"></span> Guia em destaque</span>
+          </div>
+          <div class="feature-body">
+            <span class="feature-category">Empresas · Contabilidade</span>
+            <h2 id="feature-title">Reforma tributária: por onde sua empresa pode começar?</h2>
+            <p>Um roteiro inicial para revisar dados, processos e conversas importantes com a contabilidade.</p>
+            <div class="feature-footer">
+              <span class="read-time"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> 5 min de leitura</span>
+              <button class="text-link" type="button" data-open-article="tributaria">Ler a análise <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="topic-strip" aria-label="Temas em destaque">
+      <div class="container topic-inner">
+        <span class="topic-title">No radar</span>
+        <a class="topic-link" href="#noticias" data-topic="contabilidade"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Rotina contábil</a>
+        <a class="topic-link" href="#noticias" data-topic="economia"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 18 9 13l3 3 7-9M14 7h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg> Indicadores econômicos</a>
+        <a class="topic-link" href="#noticias" data-topic="negocios"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h16v12H4zM8 8V5h8v3M4 12h16M10 12v2h4v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Pequenas empresas</a>
+        <a class="topic-link" href="#noticias" data-topic="contabilidade"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5h14v14H5zM8 9h8M8 12h8M8 15h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Organização fiscal</a>
+      </div>
+    </div>
+
+    <section class="news-section" id="noticias" aria-labelledby="news-title">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Leitura para hoje e para o próximo passo</p>
+            <h2 id="news-title">Últimas pautas</h2>
+            <p class="section-description">Conteúdo prático para acompanhar a contabilidade e a economia do Brasil.</p>
+          </div>
+          <label class="search-wrap">
+            <span class="sr-only">Buscar pautas</span>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input class="search-input" id="searchInput" type="search" placeholder="Buscar uma pauta..." autocomplete="off">
+          </label>
+        </div>
+
+        <div class="filter-row" role="group" aria-label="Filtrar matérias por editoria">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Todas as pautas</button>
+          <button class="filter-button" type="button" data-filter="contabilidade" aria-pressed="false">Contabilidade</button>
+          <button class="filter-button" type="button" data-filter="economia" aria-pressed="false">Economia</button>
+          <button class="filter-button" type="button" data-filter="negocios" aria-pressed="false">Negócios</button>
+        </div>
+
+        <div class="news-layout">
+          <div class="story-grid" id="storyGrid">
+            <article class="story-card" data-category="contabilidade" data-search="mei separar contas negocio pessoais fluxo de caixa">
+              <div class="story-top"><span class="category-label">Contabilidade</span><span class="story-visual" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v13H4zM8 7V4h8v3M4 11h16M10 11v2h4v-2M8 16h3M14 16h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              <h3>MEI: como separar as contas do negócio e as pessoais</h3>
+              <p>Um hábito simples de organização pode deixar o caixa mais claro e facilitar o acompanhamento da atividade.</p>
+              <div class="story-meta"><span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> 4 min de leitura</span><button type="button" data-open-article="mei">Abrir pauta <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+            </article>
+
+            <article class="story-card" data-category="economia" data-search="indicadores economicos inflação juros preços empresas">
+              <div class="story-top"><span class="category-label category-economia">Economia</span><span class="story-visual" aria-hidden="true" style="color:#11805e;background:#e7f7f1"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18 9 13l3 3 7-9M14 7h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              <h3>Quais indicadores acompanhar antes de rever seus preços?</h3>
+              <p>Inflação, juros e atividade econômica ajudam a compor o cenário para decisões de compra e planejamento.</p>
+              <div class="story-meta"><span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> 6 min de leitura</span><button type="button" data-open-article="indicadores">Abrir pauta <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+            </article>
+
+            <article class="story-card" data-category="contabilidade" data-search="fechamento mensal documentos notas fiscais recibos extratos rotina contábil">
+              <div class="story-top"><span class="category-label">Contabilidade</span><span class="story-visual" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3.8h8l4 4v12.4H6zM14 4v4h4M9 12h6M9 15.5h6M9 9h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              <h3>Fechamento do mês: documentos que ajudam na rotina</h3>
+              <p>Notas, comprovantes e extratos bem organizados tornam a troca de informações com a contabilidade mais simples.</p>
+              <div class="story-meta"><span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> 3 min de leitura</span><button type="button" data-open-article="fechamento">Abrir pauta <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+            </article>
+
+            <article class="story-card" data-category="negocios" data-search="crédito empresarial juros custo efetivo prazo tarifas caixa empresa">
+              <div class="story-top"><span class="category-label category-negocios">Negócios</span><span class="story-visual" aria-hidden="true" style="color:#965cb9;background:#f3ecfa"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="6" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 10h17M7 15h3M16 4v4M8 4v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              <h3>Crédito empresarial: o que analisar além da taxa</h3>
+              <p>Prazo, tarifas e impacto das parcelas no caixa também entram na conta ao comparar alternativas de financiamento.</p>
+              <div class="story-meta"><span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> 5 min de leitura</span><button type="button" data-open-article="credito">Abrir pauta <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+            </article>
+            <div class="empty-state" id="emptyState">Nenhuma pauta encontrada. Tente outra busca ou editoria.</div>
+          </div>
+
+          <aside class="sidebar" aria-label="Conteúdo complementar">
+            <section class="newsletter-card" id="newsletter" aria-labelledby="newsletter-title">
+              <span class="newsletter-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m4.5 7 7.5 5.5L19.5 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3 id="newsletter-title">O essencial, direto na sua caixa de entrada.</h3>
+              <p>Uma seleção de pautas sobre contabilidade e economia, sem excesso de ruído.</p>
+              <form class="newsletter-form" id="newsletterForm">
+                <label class="sr-only" for="emailInput">Seu e-mail</label>
+                <input id="emailInput" type="email" placeholder="voce@empresa.com.br" required>
+                <button class="button" type="submit">Quero receber <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </form>
+              <small class="newsletter-note">Formulário demonstrativo: conecte um serviço de newsletter para ativar inscrições.</small>
+            </section>
+
+            <section class="popular-card" aria-labelledby="popular-title">
+              <div class="popular-heading"><h3 id="popular-title">Pautas para guardar</h3><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 14.6 9l5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+              <ol class="popular-list">
+                <li><button type="button" data-open-article="tributaria">Reforma tributária: por onde sua empresa pode começar?</button></li>
+                <li><button type="button" data-open-article="mei">MEI: separar as contas do negócio e as pessoais</button></li>
+                <li><button type="button" data-open-article="indicadores">Indicadores econômicos para acompanhar preços</button></li>
+              </ol>
+            </section>
+            <div class="editorial-note" id="sobre"><strong>Sobre este projeto:</strong> página inicial demonstrativa para um portal brasileiro de contabilidade e economia. Revise as pautas e conecte as ferramentas antes de publicar.</div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing-band" aria-label="Acompanhe o portal">
+      <div class="container closing-inner">
+        <div><h2>Mais clareza para acompanhar o que importa.</h2><p>Explore as editorias e encontre a pauta certa para o seu momento.</p></div>
+        <a class="button" href="#inicio">Voltar ao início <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3.75h8l4 4v12.5H6V3.75Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.9v4h4M9 12h6M9 15.5h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span> Pauta &amp; Números</div>
+      <p class="footer-copy">© <span id="year"></span> Pauta &amp; Números · Página demonstrativa com pautas de exemplo.</p>
+    </div>
+  </footer>
+
+  <dialog id="articleDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-content">
+      <div class="dialog-top"><span class="dialog-category" id="dialogCategory">Pauta</span><button class="dialog-close" id="dialogClose" type="button" aria-label="Fechar matéria"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+      <h2 id="dialogTitle"></h2>
+      <p class="dialog-summary" id="dialogSummary"></p>
+      <div class="dialog-body" id="dialogBody"></div>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const articles = {
+      tributaria: {
+        category: 'Empresas · Contabilidade',
+        title: 'Reforma tributária: por onde sua empresa pode começar?',
+        summary: 'Um roteiro inicial para revisar dados, processos e conversas importantes com a contabilidade.',
+        paragraphs: [
+          'O melhor primeiro passo é entender como a empresa funciona hoje. Reúna informações sobre atividades, produtos e serviços, cadastros, documentos fiscais e sistemas usados na operação.',
+          'Com esse panorama em mãos, converse com a equipe contábil sobre os pontos que merecem acompanhamento e sobre como organizar as informações ao longo do tempo. Evite tomar decisões com base em uma manchete isolada: regras e cronogramas dependem de orientação atualizada e do perfil de cada negócio.',
+          'Uma lista prática para começar: revisar os cadastros da empresa; identificar quem cuida de cada processo fiscal; mapear os sistemas que registram vendas e compras; e manter um canal de dúvidas com a contabilidade. Este guia é introdutório e não substitui orientação profissional.'
+        ]
+      },
+      mei: {
+        category: 'Contabilidade · Pequenos negócios',
+        title: 'MEI: como separar as contas do negócio e as pessoais',
+        summary: 'Um hábito simples de organização pode deixar o caixa mais claro e facilitar o acompanhamento da atividade.',
+        paragraphs: [
+          'Misturar pagamentos pessoais e da atividade dificulta saber quanto o negócio recebe, quanto gasta e o que sobra. Mesmo sem abrir uma conta bancária específica, vale registrar as movimentações da empresa em uma planilha ou ferramenta própria.',
+          'Anote entradas, despesas e retiradas com regularidade. Guarde comprovantes e diferencie os gastos ligados ao trabalho dos gastos pessoais. Assim, fica mais simples acompanhar o fluxo de caixa e preparar informações para conversar com um contador.',
+          'A organização não substitui o cumprimento das obrigações aplicáveis ao MEI. Consulte os canais oficiais e um profissional contábil para confirmar regras, prazos e limites válidos para sua situação.'
+        ]
+      },
+      indicadores: {
+        category: 'Economia · Planejamento',
+        title: 'Quais indicadores acompanhar antes de rever seus preços?',
+        summary: 'Inflação, juros e atividade econômica ajudam a compor o cenário para decisões de compra e planejamento.',
+        paragraphs: [
+          'Nenhum indicador, sozinho, explica todo o cenário. Para uma empresa, vale observar como os custos dos insumos, o transporte, o crédito e a demanda dos clientes estão evoluindo no próprio segmento.',
+          'Indicadores amplos de inflação, juros e atividade econômica oferecem contexto. Compare esses dados com os registros internos: custo por produto, margem, volume de vendas e prazo médio de recebimento. A combinação costuma ser mais útil do que reagir a um número isolado.',
+          'Antes de mudar preços, avalie alternativas com cuidado e registre as premissas usadas. Os dados econômicos mudam com o tempo; consulte fontes oficiais atualizadas e adapte a análise à realidade do seu negócio.'
+        ]
+      },
+      fechamento: {
+        category: 'Contabilidade · Organização',
+        title: 'Fechamento do mês: documentos que ajudam na rotina',
+        summary: 'Notas, comprovantes e extratos bem organizados tornam a troca de informações com a contabilidade mais simples.',
+        paragraphs: [
+          'Uma rotina mensal previsível reduz a correria na hora de conferir as movimentações. Separe notas fiscais emitidas e recebidas, comprovantes de pagamentos e recebimentos, extratos bancários e documentos relativos a folha e serviços contratados, quando aplicável.',
+          'Use pastas digitais com nomes claros e confira se os arquivos estão legíveis. Se houver divergências entre extratos, notas e controles internos, anote a dúvida para levar à equipe contábil em vez de tentar corrigir sem contexto.',
+          'A lista exata de documentos pode variar conforme atividade, regime e estrutura da empresa. Combine um checklist específico com o profissional responsável pela sua contabilidade.'
+        ]
+      },
+      credito: {
+        category: 'Negócios · Finanças',
+        title: 'Crédito empresarial: o que analisar além da taxa',
+        summary: 'Prazo, tarifas e impacto das parcelas no caixa também entram na conta ao comparar alternativas de financiamento.',
+        paragraphs: [
+          'Ao comparar propostas, olhe para o custo total, tarifas, seguros associados, prazo, garantias e condições de pagamento. A taxa anunciada é apenas uma parte da análise.',
+          'Projete as parcelas no fluxo de caixa e considere cenários de receita mais conservadores. Também vale esclarecer se há custos por antecipação, atraso ou quitação antecipada e pedir as condições completas por escrito.',
+          'A decisão depende da necessidade e da capacidade financeira da empresa. Se necessário, peça apoio de um contador ou consultor financeiro antes de assumir uma obrigação.'
+        ]
+      }
+    };
+
+    const dialog = document.getElementById('articleDialog');
+    const dialogTitle = document.getElementById('dialogTitle');
+    const dialogCategory = document.getElementById('dialogCategory');
+    const dialogSummary = document.getElementById('dialogSummary');
+    const dialogBody = document.getElementById('dialogBody');
+    const toast = document.getElementById('toast');
+    let toastTimer;
+
+    function openArticle(key) {
+      const article = articles[key];
+      if (!article) return;
+      dialogCategory.textContent = article.category;
+      dialogTitle.textContent = article.title;
+      dialogSummary.textContent = article.summary;
+      dialogBody.replaceChildren(...article.paragraphs.map((text) => {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = text;
+        return paragraph;
+      }));
+      if (typeof dialog.showModal === 'function') dialog.showModal();
+      else dialog.setAttribute('open', '');
+    }
+
+    document.querySelectorAll('[data-open-article]').forEach((button) => {
+      button.addEventListener('click', () => openArticle(button.dataset.openArticle));
+    });
+    document.getElementById('dialogClose').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && dialog.hasAttribute('open')) dialog.close();
+    });
+
+    let activeFilter = 'all';
+    const cards = [...document.querySelectorAll('.story-card')];
+    const searchInput = document.getElementById('searchInput');
+    const emptyState = document.getElementById('emptyState');
+    function applyFilters() {
+      const query = searchInput.value.trim().toLocaleLowerCase('pt-BR');
+      let visible = 0;
+      cards.forEach((card) => {
+        const categoryMatches = activeFilter === 'all' || card.dataset.category === activeFilter;
+        const searchText = `${card.textContent} ${card.dataset.search || ''}`.toLocaleLowerCase('pt-BR');
+        const queryMatches = !query || searchText.includes(query);
+        const show = categoryMatches && queryMatches;
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      emptyState.style.display = visible ? 'none' : 'block';
+    }
+    document.querySelectorAll('.filter-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        activeFilter = button.dataset.filter;
+        document.querySelectorAll('.filter-button').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        applyFilters();
+      });
+    });
+    searchInput.addEventListener('input', applyFilters);
+
+    function setFilterAndGo(category) {
+      const filterButton = document.querySelector(`.filter-button[data-filter="${category}"]`);
+      if (filterButton) filterButton.click();
+      document.getElementById('noticias').scrollIntoView({ behavior: 'smooth' });
+    }
+    document.querySelectorAll('[data-nav-filter]').forEach((link) => {
+      link.addEventListener('click', () => {
+        setFilterAndGo(link.dataset.navFilter);
+        document.getElementById('primaryNav').classList.remove('is-open');
+        document.getElementById('menuToggle').setAttribute('aria-expanded', 'false');
+      });
+    });
+    document.querySelectorAll('[data-topic]').forEach((link) => {
+      link.addEventListener('click', () => setFilterAndGo(link.dataset.topic));
+    });
+    document.getElementById('focusSearch').addEventListener('click', () => {
+      document.getElementById('noticias').scrollIntoView({ behavior: 'smooth' });
+      window.setTimeout(() => searchInput.focus(), 350);
+    });
+
+    const menuToggle = document.getElementById('menuToggle');
+    menuToggle.addEventListener('click', () => {
+      const nav = document.getElementById('primaryNav');
+      const isOpen = nav.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    });
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 4300);
+    }
+    document.getElementById('newsletterForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      showToast('Este formulário é demonstrativo. Conecte um serviço de newsletter para receber inscrições.');
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
